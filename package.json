@@ -1,0 +1,42 @@
+{
+  "name": "kami-texture",
+  "version": "1.0.0",
+  "description": "texture utils for kami",
+  "main": "index.js",
+  "license": "MIT",
+  "author": {
+    "name": "Matt DesLauriers",
+    "email": "dave.des@gmail.com"
+  },
+  "dependencies": {
+    "klasse": "~1.0.8",
+    "number-util": "~1.0.2"
+  },
+  "devDependencies": {
+    "tape": "~2.13.2"
+  },
+  "scripts": {
+    "test": "tape test.js"
+  },
+  "testling": {
+    "files": "test.js",
+    "browsers": [
+      "ie/6..latest",
+      "chrome/22..latest",
+      "firefox/16..latest",
+      "safari/latest",
+      "opera/11.0..latest",
+      "iphone/6",
+      "ipad/6",
+      "android-browser/latest"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mattdesl/kami-texture.git"
+  },
+  "homepage": "https://github.com/mattdesl/kami-texture",
+  "bugs": {
+    "url": "https://github.com/mattdesl/kami-texture/issues"
+  }
+}
