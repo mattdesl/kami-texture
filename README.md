@@ -8,6 +8,7 @@ texture utils for kami
 
 [![NPM](https://nodei.co/npm/kami-texture.png)](https://nodei.co/npm/kami-texture/)
 
+
 ## License
 
 MIT, see [LICENSE.md](http://github.com/mattdesl/kami-texture/blob/master/LICENSE.md) for details.
