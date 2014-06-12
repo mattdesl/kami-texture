@@ -33,6 +33,8 @@ var Texture = new Class({
 	 * @param  {Object} options the options to create this texture
 	 */
 	initialize: function Texture(context, options) {
+		if (!(this instanceof Texture))
+			return new Texture(context, options);
 		if (!context || typeof context !== "object")
 			throw "valid GL context not specified to Texture";
 
