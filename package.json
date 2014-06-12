@@ -18,7 +18,7 @@
     "canvas-pixels": "0.0.0"
   },
   "scripts": {
-    "test": "tape test.js"
+    "test": "browserify test.js | testling -x open"
   },
   "testling": {
     "files": "test.js",
