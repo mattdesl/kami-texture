@@ -4,7 +4,6 @@
 
 var test = require('tape').test;
 var Texture = require('./');
-var getPixels = require('canvas-pixels').get3d;
 
 test('testing async image load', function(t) {
     t.plan(2);
