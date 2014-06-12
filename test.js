@@ -1,3 +1,7 @@
+/// This depends on kami-fbo, which depends on kami-texture
+/// You need a new version of NPM for the cyclic dependency to 
+/// install correctly ... 
+
 var test = require('tape').test;
 var Texture = require('./');
 var getPixels = require('canvas-pixels').get3d;
@@ -8,6 +12,7 @@ test('testing async image load', function(t) {
     var gl = require('webgl-context')();
     if (!gl)
         throw "WebGL not supported";
+    
     //test constructor
     var tex = new Texture(gl, {
         src: 'test/does-not-exist',
@@ -30,8 +35,7 @@ test('testing data constructor', function(t) {
     if (!gl)
         throw "WebGL not supported";
 
-    var batch = require('kami-batch')(gl);
-
+    //make a red texture
     var tex = Texture(gl, {
         width: 1,
         height: 1,
@@ -39,13 +43,16 @@ test('testing data constructor', function(t) {
         format: Texture.Format.RGB
     });
 
-    //TODO: use FBO to read pixels instead of relying on kami-batch for this test
-    batch.begin();
-    batch.draw(tex, 0, 0, 1, 1);
-    batch.end();
+    //bind it to a FBO so we can read its pixels
+    var fbo = require('kami-fbo')(gl, {
+        texture: tex
+    });
 
-    var pix = getPixels(gl);
-    t.ok( pix[0]===255 && pix[1]===0 && pix[2]===0, 'data texture is correct color' );
+    var data = new Uint8Array(4);
+    fbo.begin();
+    gl.readPixels(0, 0, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, data);
+    fbo.end();
 
+    t.ok(data[0]===255 && data[1]===0 && data[2]===0, 'data texture stores RGBA color');
     t.end();
 });

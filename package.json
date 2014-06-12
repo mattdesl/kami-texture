@@ -17,7 +17,8 @@
   "devDependencies": {
     "tape": "~2.13.2",
     "kami-batch": "~1.0.4",
-    "canvas-pixels": "0.0.0"
+    "canvas-pixels": "0.0.0",
+    "kami-fbo": "~1.1.2"
   },
   "scripts": {
     "test": "browserify test.js | testling -x open"
