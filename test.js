@@ -6,7 +6,8 @@ test('testing async image load', function(t) {
     t.plan(2);
 
     var gl = require('webgl-context')();
-
+    if (!gl)
+        throw "WebGL not supported";
     //test constructor
     var tex = new Texture(gl, {
         src: 'test/does-not-exist',
@@ -25,9 +26,10 @@ test('testing async image load', function(t) {
 });
 
 test('testing data constructor', function(t) {
-    t.plan(1);
-        
     var gl = require('webgl-context')({ width: 1, height: 1 });
+    if (!gl)
+        throw "WebGL not supported";
+
     var batch = require('kami-batch')(gl);
 
     var tex = Texture(gl, {
@@ -44,4 +46,6 @@ test('testing data constructor', function(t) {
 
     var pix = getPixels(gl);
     t.ok( pix[0]===255 && pix[1]===0 && pix[2]===0, 'data texture is correct color' );
+
+    t.end();
 });

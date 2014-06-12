@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "klasse": "~1.0.8",
-    "number-util": "~1.0.2"
+    "number-util": "~1.0.2",
+    "kami-util": "~1.1.0"
   },
   "devDependencies": {
     "tape": "~2.13.2",
