@@ -1,6 +1,6 @@
 {
   "name": "kami-texture",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "texture utils for kami",
   "main": "index.js",
   "license": "MIT",
