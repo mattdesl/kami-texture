@@ -33,15 +33,15 @@ var Texture = new Class({
 	 * @constructor
 	 * @param  {WebGLRenderingContext|kami-context} context the WebGL context
 	 * @param  {Object} options the options to create this texture
-	 *   @param {String} src the path to the image file, if ommitted we assume data will be given
-	 *   @param {Function} onLoad called when the image is loaded (if src is provided)
-	 *   @param {Function} onError called when there was an error loading the image (if src is provided)
-	 *   @param {ArrayBuffer} data some typed array with texture data, ignored if 'src' is specified
-	 *   @param {GLenum} format the texture format, default Texture.Format.RGBA (for when data is specified)
-	 *   @param {GLenum} type the data type, default Texture.DataType.UNSIGNED_BYTE (for when data is specified)
-	 *   @param {Number} width the width of the texture (if we are not specifying an image URL)
-	 *   @param {Number} height the height of the texture (if we are not specifying an image URL)
-	 *   @param {Boolean} genMipmaps whether to generate mipmaps after upload
+	 *   @param {String} options.src the path to the image file, if ommitted we assume data will be given
+	 *   @param {Function} options.onLoad called when the image is loaded (if src is provided)
+	 *   @param {Function} options.onError called when there was an error loading the image (if src is provided)
+	 *   @param {ArrayBuffer} options.data some typed array with texture data, ignored if 'src' is specified
+	 *   @param {GLenum} options.format the texture format, default Texture.Format.RGBA (for when data is specified)
+	 *   @param {GLenum} options.type the data type, default Texture.DataType.UNSIGNED_BYTE (for when data is specified)
+	 *   @param {Number} options.width the width of the texture (if we are not specifying an image URL)
+	 *   @param {Number} options.height the height of the texture (if we are not specifying an image URL)
+	 *   @param {Boolean} options.genMipmaps whether to generate mipmaps after upload
 	 */
 	initialize: function Texture(context, options) {
 		if (!(this instanceof Texture))
