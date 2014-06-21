@@ -5,7 +5,7 @@
 
 2D texture utility for [kami](http://github.com/mattdesl/kami). Often rendered using [kami-batch](http://mattdesl.github.io/kami-batch).
 
-```
+```js
 //get a webGL context somehow
 var gl = require('webgl-context');
 
