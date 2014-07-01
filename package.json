@@ -4,10 +4,7 @@
   "description": "texture utils for kami",
   "main": "index.js",
   "license": "MIT",
-  "author": {
-    "name": "Matt DesLauriers",
-    "email": "dave.des@gmail.com"
-  },
+  "author": "Matt DesLauriers <dave.des@gmail.com>",
   "dependencies": {
     "klasse": "~1.0.8",
     "number-util": "~1.0.2",
@@ -40,5 +37,21 @@
   "homepage": "https://github.com/mattdesl/kami-texture",
   "bugs": {
     "url": "https://github.com/mattdesl/kami-texture/issues"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "keywords": [
+    "kami",
+    "texture",
+    "webgl",
+    "glsl",
+    "gl",
+    "image",
+    "sprite",
+    "tex",
+    "texImage2D",
+    "glTexImage2D",
+    "texture2d"
+  ]
 }
