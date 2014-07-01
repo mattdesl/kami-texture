@@ -7,7 +7,7 @@
 var Class = require('klasse');
 var nextPowerOfTwo = require('number-util').nextPowerOfTwo;
 var isPowerOfTwo = require('number-util').isPowerOfTwo;
-var wrapContext = require('kami-util').wrapContext;
+var BaseObject = require('kami-util').BaseObject;
 
 var Texture = new Class({
 
@@ -36,6 +36,7 @@ var Texture = new Class({
 	 *   @param {String} options.src the path to the image file, if ommitted we assume data will be given
 	 *   @param {Function} options.onLoad called when the image is loaded (if src is provided)
 	 *   @param {Function} options.onError called when there was an error loading the image (if src is provided)
+	 *   @param {String} options.crossOrigin the image cross-origin parameter (if src is provided)
 	 *   @param {ArrayBuffer} options.data some typed array with texture data, ignored if 'src' is specified
 	 *   @param {GLenum} options.format the texture format, default Texture.Format.RGBA (for when data is specified)
 	 *   @param {GLenum} options.type the data type, default Texture.DataType.UNSIGNED_BYTE (for when data is specified)
@@ -46,10 +47,9 @@ var Texture = new Class({
 	initialize: function Texture(context, options) {
 		if (!(this instanceof Texture))
 			return new Texture(context, options);
-		if (!context || typeof context !== "object")
-			throw "valid GL context not specified to Texture";
-
-		this.context = wrapContext(context);
+		
+		//sets up base Kami object..
+		BaseObject.call(this, context);
 
 		/**
 		 * When a texture is created, we keep track of the arguments provided to 
@@ -105,11 +105,6 @@ var Texture = new Class({
 		 */
 		this.height = 0; //initialized on texture upload
 
-		// e.g. --> new Texture(gl, 256, 256, gl.RGB, gl.UNSIGNED_BYTE, data);
-		//		      creates a new empty texture, 256x256
-		//		--> new Texture(gl);
-		//			  creates a new texture but WITHOUT uploading any data. 
-
 		/**
 		 * The S wrap parameter.
 		 * @property {GLenum} wrapS
@@ -159,6 +154,7 @@ var Texture = new Class({
 		if (options.src && typeof options.src==="string") {
 			var img = new Image();
 			var path       = options.src;
+			var crossOrigin = options.crossOrigin;
 			var successCB  = typeof options.onLoad === "function" ? options.onLoad : null;
 			var failCB     = typeof options.onError === "function" ? options.onError : null;
 			var genMipmaps = options.genMipmaps;
@@ -173,6 +169,8 @@ var Texture = new Class({
 				self.uploadData(1, 1);
 				this.width = this.height = 0;
 			}
+
+			img.crossOrigin = crossOrigin;
 
 			img.onload = function(ev) {
 				self.uploadImage(img, undefined, undefined, genMipmaps);
