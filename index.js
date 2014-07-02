@@ -172,26 +172,33 @@ var Texture = new Class({
 
 			img.crossOrigin = crossOrigin;
 
+
 			img.onload = function(ev) {
 				self.uploadImage(img, undefined, undefined, genMipmaps);
-				if (successCB)
-					successCB(ev);
+				if (typeof successCB === "function")
+					successCB.call(self, ev, self);
 			}
 			img.onerror = function(ev) {
 				if (genMipmaps) //we still need to gen mipmaps on the 1x1 dummy
 					gl.generateMipmap(gl.TEXTURE_2D);
-				if (failCB)
-					failCB(ev);
+				if (typeof failCB === "function")
+					failCB.call(self, ev, self);
 			}
 			img.onabort = function(ev) {
 				if (genMipmaps) 
 					gl.generateMipmap(gl.TEXTURE_2D);
-				if (failCB)
-					failCB(ev);
+				if (typeof failCB === "function")
+					failCB.call(self, ev, self);
 			}
 
 			img.src = path;
 		} 
+		//otherwise see if we have an 'image' specified
+		else if (options.image) {
+			this.uploadImage(options.image, options.format, 
+							options.dataType, options.data, 
+							options.genMipmaps);
+		}
 		//otherwise assume our regular list of width/height arguments are passed
 		else {
 			this.uploadData(options.width, options.height, options.format, 
@@ -382,6 +389,10 @@ var Texture = new Class({
 
 		if (genMipmaps)
 			gl.generateMipmap(this.target);
+	},
+
+	uploadSubImage: function() {
+
 	},
 
 	/**

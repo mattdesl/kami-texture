@@ -37,13 +37,13 @@ The constructor. Can specify an image in options:
 
 Or you can specify the raw data directly:
 
-- `data`: an array of pixels, typically Uint8Array
+- `data` or `image`: an array of pixels, typically Uint8Array, or an HTML Image/Video object
 - `format`: a gl format, default RGBA. The constants are aliased onto `Texture.Format`
 - `type`: a gl type for the data array, default UNSIGNED_BYTE. The constants are aliased onto `Texture.DataType`
-- `width`: the width of the data
-- `height`: the height of the data
+- `width`: the width of the data (only needed if you specified `data`)
+- `height`: the height of the data (only needed if you specified `data`)
 
-If no data is specified, null (empty) data is uploaded in place. There are also a couple other parameters which can be used with images or data constructor:
+If no data or image is specified, null (empty) data is uploaded in place. There are also a couple other parameters which can be used with images or data constructor:
 
 - `genMipmaps`: whether to generate mipmaps, default false
 
@@ -57,7 +57,7 @@ The WebGLTexture identifier.
 
 ### `tex.setFilter(min, mag)`
 
-Sets the min and mag filter. LINEAR, NEAREST, etc. constants are aliased onto `Texture.Filter`. If a single argument is passed, it will be applied to both min and mag.
+Sets the min and mag filter. LINEAR, NEAREST, etc. constants are aliased onto `Texture.Filter`. If a single argument is passed, it will be applied to both min and mag. The default filters for all new textures is NEAREST.
 
 This will bind the texture before applying the parameters.
 

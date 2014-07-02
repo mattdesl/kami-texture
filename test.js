@@ -4,13 +4,28 @@
 
 var test = require('tape').test;
 var Texture = require('./');
+var createFBO = require('kami-fbo');
 
-test('testing async image load', function(t) {
-    t.plan(2);
+var gl = require('webgl-context')({ width: 1, height: 1 });
+if (!gl)
+    throw "WebGL not supported";
 
-    var gl = require('webgl-context')();
-    if (!gl)
-        throw "WebGL not supported";
+//determine if the given texture is a single pure green pixel
+function isGreen(gl, tex) {
+    //bind it to a FBO so we can read its pixels
+    var fbo = createFBO(gl, {
+        texture: tex
+    });
+
+    var data = new Uint8Array(4);
+    fbo.begin();
+    gl.readPixels(0, 0, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, data);
+    fbo.end();
+    return data[0]===0 && data[1]===255 && data[2]===0;
+}
+
+test('testing async constructor', function(t) {
+    t.plan(4);
     
     //test constructor
     var tex = new Texture(gl, {
@@ -21,37 +36,40 @@ test('testing async image load', function(t) {
     });
 
     //test non-constructor
-    Texture(gl, {
-        src: 'test/pixel-diffuse.png',
+    var tex2 = Texture(gl, {
+        src: 'test/green.png',
         onLoad: function(ev) {
             t.ok(true, 'load callback received');
+            t.ok( this.width===1 && this.height===1, 'image loaded with correct size' );
+            t.ok( isGreen(gl, this), 'image loaded with correct data');
         }
     });
 });
 
-test('testing data constructor', function(t) {
-    var gl = require('webgl-context')({ width: 1, height: 1 });
-    if (!gl)
-        throw "WebGL not supported";
+test('testing image constructor', function(t) {
+    t.plan(2);
 
-    //make a red texture
+    var image = new Image();
+    image.onload = function() {
+        var tex = Texture(gl, {
+            image: image
+        });
+
+        t.ok( tex.width===1 && tex.height===1, 'loaded image');
+        t.ok( isGreen(gl, tex), 'image loaded with correct data');
+    };
+    image.src = 'test/green.png';
+});
+
+test('testing data constructor', function(t) {
+    //make a green texture
     var tex = Texture(gl, {
         width: 1,
         height: 1,
-        data: new Uint8Array([255, 0, 0]),
+        data: new Uint8Array([0, 255, 0]),
         format: Texture.Format.RGB
     });
 
-    //bind it to a FBO so we can read its pixels
-    var fbo = require('kami-fbo')(gl, {
-        texture: tex
-    });
-
-    var data = new Uint8Array(4);
-    fbo.begin();
-    gl.readPixels(0, 0, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, data);
-    fbo.end();
-
-    t.ok(data[0]===255 && data[1]===0 && data[2]===0, 'data texture stores RGBA color');
+    t.ok( isGreen(gl, tex), 'data texture stores RGBA color');
     t.end();
 });
