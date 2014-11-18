@@ -105,6 +105,8 @@ var Texture = new Class({
 		 */
 		this.height = 0; //initialized on texture upload
 
+		this.__shape = [0, 0];
+
 		/**
 		 * The S wrap parameter.
 		 * @property {GLenum} wrapS
@@ -440,6 +442,20 @@ var Texture = new Class({
 
 	toString: function() {
 		return this.id + ":" + this.width + "x" + this.height + "";
+	},
+
+	shape: {
+		get: function() {
+			this.__shape[0] = this.width;
+			this.__shape[1] = this.height;
+			return this.__shape;
+		},
+		set: function(shape) {
+			if (typeof shape === 'number') 
+				shape = [shape, shape];
+			this._shape[0] = shape[0]||0;
+			this._shape[1] = shape[1]||0;
+		}
 	}
 });
 

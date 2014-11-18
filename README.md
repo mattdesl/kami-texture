@@ -3,7 +3,7 @@
 [![stable](http://badges.github.io/stability-badges/dist/stable.svg)](http://github.com/badges/stability-badges)
 
 
-2D texture utility for [kami](http://github.com/mattdesl/kami). Often rendered using [kami-batch](http://mattdesl.github.io/kami-batch).
+2D texture utility for [kami](http://github.com/mattdesl/kami), but can be used stand-alone with other WebGL engines (ThreeJS, StackGL, etc). Often rendered using [kami-batch](http://mattdesl.github.io/kami-batch).
 
 ```js
 //get a webGL context somehow
@@ -15,7 +15,7 @@ var tex = require('kami-texture')(gl, {
 });
 
 //setup filters if you want
-tex.setFilter(Texture.Filter.LINEAR);
+tex.setFilter(gl.LINEAR);
 
 //render it with kami-batch or another lib...
 ```
@@ -49,7 +49,7 @@ If no data or image is specified, null (empty) data is uploaded in place. There 
 
 ### `tex.width`, `tex.height`
 
-Dimensions of the texture
+Dimensions of the texture. You can also use `tex.shape` which returns an array of `[width, height]` (similar to gl-texture2d). 
 
 ### `tex.id`
 

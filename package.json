@@ -11,8 +11,9 @@
     "number-util": "~1.0.2"
   },
   "devDependencies": {
+    "kami-fbo": "~1.1.2",
     "tape": "~2.13.2",
-    "kami-fbo": "~1.1.2"
+    "webgl-context": "^1.2.1"
   },
   "scripts": {
     "test": "browserify test.js | testling -x open"

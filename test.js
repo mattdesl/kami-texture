@@ -73,3 +73,19 @@ test('testing data constructor', function(t) {
     t.ok( isGreen(gl, tex), 'data texture stores RGBA color');
     t.end();
 });
+
+
+test('testing image constructor', function(t) {
+    t.plan(2);
+
+    var image = new Image();
+    image.onload = function() {
+        var tex = Texture(gl, {
+            image: image
+        });
+
+        t.ok( tex.width===1 && tex.height===1, 'loaded image');
+        t.ok( isGreen(gl, tex), 'image loaded with correct data');
+    };
+    image.src = 'test/green.png';
+});
