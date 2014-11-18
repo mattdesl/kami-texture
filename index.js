@@ -451,10 +451,7 @@ var Texture = new Class({
 			return this.__shape;
 		},
 		set: function(shape) {
-			if (typeof shape === 'number') 
-				shape = [shape, shape];
-			this._shape[0] = shape[0]||0;
-			this._shape[1] = shape[1]||0;
+			throw new Error('changing shape not supported')
 		}
 	}
 });

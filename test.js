@@ -5,6 +5,7 @@
 var test = require('tape').test;
 var Texture = require('./');
 var createFBO = require('kami-fbo');
+var baboon = require('baboon-image-uri');
 
 var gl = require('webgl-context')({ width: 1, height: 1 });
 if (!gl)
@@ -75,17 +76,36 @@ test('testing data constructor', function(t) {
 });
 
 
-test('testing image constructor', function(t) {
-    t.plan(2);
+test('testing image shape', function(t) {
+    t.plan(7);
 
-    var image = new Image();
-    image.onload = function() {
+    var image1 = new Image();
+    image1.onload = function(image) {
         var tex = Texture(gl, {
             image: image
         });
 
         t.ok( tex.width===1 && tex.height===1, 'loaded image');
-        t.ok( isGreen(gl, tex), 'image loaded with correct data');
-    };
-    image.src = 'test/green.png';
+        t.equal( tex.shape[0], 1, 'shape width' );
+        t.equal( tex.shape[1], 1, 'shape height' );
+
+        var willThrow = function() { tex.shape = 2 }
+
+        t.throws(willThrow, 'changing shape not supported');
+    }.bind(this, image1);
+    image1.src = 'test/green.png';
+
+
+
+    var image2 = new Image();
+    image2.onload = function(image) {
+        var tex = Texture(gl, {
+            image: image
+        });
+
+        t.ok( tex.width===128 && tex.height===128, 'loaded image');
+        t.equal( tex.shape[0], 128, 'shape width' );
+        t.equal( tex.shape[1], 128, 'shape height' );
+    }.bind(this, image2);
+    image2.src = baboon;
 });

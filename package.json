@@ -11,6 +11,7 @@
     "number-util": "~1.0.2"
   },
   "devDependencies": {
+    "baboon-image-uri": "^1.0.1",
     "kami-fbo": "~1.1.2",
     "tape": "~2.13.2",
     "webgl-context": "^1.2.1"
